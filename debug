@@ -1,0 +1,8 @@
+# #!/usr/bin/env bash
+
+# export DEBUG=*
+# export NODE_ENV=development
+# export TEST_COUNTRY=us
+# export TEST_IP="204.29.115.149"
+
+# npm run testapp

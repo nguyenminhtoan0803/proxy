@@ -1,49 +1,48 @@
-const mongoose = require('mongoose');
+const ProxyDao = require("../ProxyDB/ProxyDAO");
+let mongoose = require("mongoose");
 
-mongoose.connect('mongodb://127.0.0.1:27017/proxy', {
-    keepAlive:true,
-    keepAliveInitialDelay: 30000
-});
+const dao = new ProxyDao();
+dao.connectionDB(mongoose);
 
-const ProxyList = mongoose.model('proxylists', {
-    proxy: {
-        type: String,
-        unique: true,
-        index: true
-    },
+const ProxyList = mongoose.model("proxylists", {
+  proxy: {
+    type: String,
+    unique: true,
+    index: true,
+  },
 
-    port: {
-        type: Number,
-        default: 3128
-    },
+  port: {
+    type: Number,
+    default: 3128,
+  },
 
-    type: {
-        type: Number,
-        default: 1
-    },
+  type: {
+    type: Number,
+    default: 1,
+  },
 
-    active: {
-        type: Boolean,
-        default: true,
-        index: true
-    },
+  active: {
+    type: Boolean,
+    default: true,
+    index: true,
+  },
 
-    lastused: {
-        type: Number,
-        default: 0,
-        index: true
-    },
+  lastused: {
+    type: Number,
+    default: 0,
+    index: true,
+  },
 
-    used: {
-        type: Number,
-        default: 0,
-        index: true
-    },
+  used: {
+    type: Number,
+    default: 0,
+    index: true,
+  },
 
-    country: {
-        type: String,
-        default: 'US'
-    }
+  country: {
+    type: String,
+    default: "US",
+  },
 });
 
 module.exports = ProxyList;

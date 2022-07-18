@@ -13,7 +13,7 @@ class ProxyController {
      * @param proxys
      * @returns array
      */
-    getProxyPort = async (proxys) => {
+    getProxyPort = (proxys) => {
         let arr = [];
         let ports = proxys[0].substring(proxys[0].length - 5);
         proxys[0] = proxys[0].replace(ports, "");
@@ -38,22 +38,18 @@ class ProxyController {
                         for (let i =
                             0; i < jsonData["data"].length; i++) {
                             let proxys = jsonData["data"][i];
-                            dao.insertDatabase(proxys, new ProxyController());//insert data in collection datas
+                            dao.insertDatabase(proxys, new ProxyController(), ProxyList);//insert data in collection datas
                         }
                     } else {
                         for (let i = 0; i < jsonData["data"].length; i++) {
                             let proxys = jsonData["data"][i];
                             let arr = new ProxyController().getProxyPort(proxys);
-                            let myResult = async fetchJSON()
-                            .catch((error) => {
-                                    console.log(error);
-                                    });
-                            console.log(JSON.stringify(myResult));
+                            let result = arr["[[PromiseResult]]"];
                             let data = ProxyList.findOne({
                                 "proxy":  arr[0]
                             });
                             if (!data) {
-                                dao.insertDatabase(proxys, new ProxyController());
+                                dao.insertDatabase(proxys, new ProxyController(), ProxyList());
                             }
                         }
                     }

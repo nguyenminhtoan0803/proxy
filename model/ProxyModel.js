@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({
+mongoose.connect('mongodb://127.0.0.1:27017/proxy', {
+    keepAlive:true,
+    keepAliveInitialDelay: 30000
+});
+
+const ProxyList = mongoose.model('proxylists', {
     proxy: {
         type: String,
         unique: true,
@@ -23,7 +28,7 @@ const schema = new mongoose.Schema({
         index: true
     },
 
-    last_used: {
+    lastused: {
         type: Number,
         default: 0,
         index: true
@@ -39,7 +44,6 @@ const schema = new mongoose.Schema({
         type: String,
         default: 'US'
     }
-
 });
 
-module.exports = mongoose.model('ProxyList', schema);
+module.exports = ProxyList;

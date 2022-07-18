@@ -1,14 +1,19 @@
 const axios = require("axios");
 const ProxyList = require("../model/ProxyModel");
-const ProxyDao = require("../ProxyDB/ProxyDAO")
+const ProxyDao = require("../ProxyDB/ProxyDAO");
+
 
 class ProxyController {
+    constructor() {
+
+    }
+
     /**
      * function sub proxy and port
      * @param proxys
      * @returns array
      */
-    async getProxyPort(proxys) {
+    getProxyPort = async (proxys) => {
         let arr = [];
         let ports = proxys[0].substring(proxys[0].length - 5);
         proxys[0] = proxys[0].replace(ports, "");
@@ -23,25 +28,32 @@ class ProxyController {
      * function get data from API server
      * @param API_URI
      */
-    async proxyDataRepose(API_URI) {
+    proxyDataRepose = async (API_URI) => {
         axios.get(API_URI)
             .then((response) => {
                 let jsonData = response.data;//response.data using API
-                ProxyList.countDocuments({},async function (err, result) {//count documents in collection datas in database prox
+                ProxyList.collection.countDocuments({}, function (err, result) {//count documents in collection datas in database prox
+                    const dao = new ProxyDao();
                     if (result === 0) {
-                        for (let i = 0; i < jsonData["data"].length; i++) {
+                        for (let i =
+                            0; i < jsonData["data"].length; i++) {
                             let proxys = jsonData["data"][i];
-                            await ProxyDao.insertDatabase(proxys);//insert data in collection datas
+                            dao.insertDatabase(proxys, new ProxyController());//insert data in collection datas
                         }
                     } else {
                         for (let i = 0; i < jsonData["data"].length; i++) {
                             let proxys = jsonData["data"][i];
-                            let arr = getProxyPort(proxys);
-                            let data = await ProxyList.findOne({
-                                "proxy": arr[0]
+                            let arr = new ProxyController().getProxyPort(proxys);
+                            let myResult = async fetchJSON()
+                            .catch((error) => {
+                                    console.log(error);
+                                    });
+                            console.log(JSON.stringify(myResult));
+                            let data = ProxyList.findOne({
+                                "proxy":  arr[0]
                             });
                             if (!data) {
-                                await ProxyDao.insertDatabase(proxys);
+                                dao.insertDatabase(proxys, new ProxyController());
                             }
                         }
                     }
@@ -50,6 +62,5 @@ class ProxyController {
             console.error(err);
         })
     }
-}
-
-module.exports = new ProxyController();
+};
+module.exports = ProxyController;

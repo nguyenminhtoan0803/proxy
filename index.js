@@ -39,7 +39,7 @@ app.get('/xda/getproxy', async function (req, res) {
         };
     }
 
-    //set value lastused current time
+    //update value lastused current time
     proxyData.lastused = new Date().getTime();
     proxyData.save();
 

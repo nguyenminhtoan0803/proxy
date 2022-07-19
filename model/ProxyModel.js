@@ -1,5 +1,5 @@
-const ProxyDao = require("../db/ProxyDAO");
-const mongoose = require("mongoose");
+const ProxyDao = require('../db/ProxyDAO');
+const mongoose = require('mongoose');
 
 const dao = new ProxyDao();
 dao.connectionDB(mongoose);

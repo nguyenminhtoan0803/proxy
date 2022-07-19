@@ -1,6 +1,6 @@
 const axios = require("axios");
-const ProxyList = require("../model/ProxyModel");
-const ProxyDao = require("../db/ProxyDAO");
+const ProxyList = require('../model/ProxyModel');
+const ProxyDao = require('../db/ProxyDAO');
 
 class ProxyController {
     /**
